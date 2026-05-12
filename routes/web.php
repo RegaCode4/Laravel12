@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PegawaiController;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -23,21 +24,21 @@ Route::get('/pegawai', function () {
 // });
 
 //route parameter optional
-Route::get('/pegawai/detail/{nama?}', function (string $nama = null){
+Route::get('/pegawai/detail/{nama?}', function (string $nama = null) {
     return "Nama pegawai ini adalah : $nama";
 });
 
 //name route
-Route::get('/pegawai/cek_absensi/maret', function (){
+Route::get('/pegawai/cek_absensi/maret', function () {
     return "Absensi pegawai pada bulan maret";
 })->name('cek_absensi');
 
 //follback route
-Route::fallback(function (){
+Route::fallback(function () {
     return view('404');
 });
 
-Route::get('/coba_query', function (){
+Route::get('/coba_query', function () {
     // $pegawai = Pegawai::all();//==Select * from pegawais;
     // dd($pegawai->toArray());
     // $pegawai = Pegawai::find(29);//==Select * from pegawais where id = 29;
@@ -54,6 +55,8 @@ Route::get('/coba_query', function (){
     ]);
     //dd($pegawai->toArray());
 });
+
+Route::resource('pegawai', PegawaiController::class);
 
 //route redirect
 // Route::get('/test', function (){
