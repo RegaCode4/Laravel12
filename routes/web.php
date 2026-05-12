@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Pegawai;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,24 @@ Route::get('/pegawai/cek_absensi/maret', function (){
 //follback route
 Route::fallback(function (){
     return view('404');
+});
+
+Route::get('/coba_query', function (){
+    // $pegawai = Pegawai::all();//==Select * from pegawais;
+    // dd($pegawai->toArray());
+    // $pegawai = Pegawai::find(29);//==Select * from pegawais where id = 29;
+    // dd($pegawai->toArray());
+
+    //$pegawai = Pegawai::where('nama_pegawai', "Gatra Wasita")->first();
+    //$pegawai = Pegawai::where('umur', '<', 35)->get();
+
+    //Pegawai::where('nama_pegawai', 'Gatra Wasita')->delete();
+    //Pegawai::destroy(30);
+
+    Pegawai::where('id', 40)->update([
+        'nama_pegawai' => 'ahmad santoso'
+    ]);
+    //dd($pegawai->toArray());
 });
 
 //route redirect
