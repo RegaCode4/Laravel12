@@ -63,4 +63,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 Belajar Laravel12 dengan studi kasus Aplikasi Manajemen Pegawai
 >>>>>>> dd999180380a7a118b45b89b9f47f6498c1acbc8
 
-Belajar Migration Laravellll
+tanggal 12 Mei 2026
+-Migration
+-Seeder, Faker dan Factory serta Eloquent
+-Read data dan DataTables
