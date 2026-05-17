@@ -12,13 +12,14 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('pegawai.store') }}" method="POST" class="">
+            <form action="{{ route('pegawai.update', $pegawai->id) }}" method="POST" class="">
                 @csrf
+                @method('PUT')
                 <div class="form-group my-2">
                     <label for="nama_pegawai">Nama Pegawai</label>
                     <input type="text" name="nama_pegawai" id="nama_pegawai" class="form-control @error('nama_pegawai') 
                         is-invalid @enderror"
-                        value="{{ old('nama_pegawai') }}" autofocus>
+                        value="{{ $pegawai->nama_pegawai }}" autofocus>
                     @error('nama_pegawai')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -27,7 +28,7 @@
                     <label for="nik">NIK</label>
                     <input type="text" name="nik" id="nik" class="form-control @error('nik') 
                         is-invalid @enderror"
-                        value="{{ old('nik') }}">
+                        value="{{ $pegawai->nik }}" readonly>
                     @error('nik')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -36,7 +37,7 @@
                     <label for="umur">Umur</label>
                     <input type="number" name="umur" id="umur" class="form-control @error('umur') 
                         is-invalid @enderror"
-                        value="{{ old('umur') }}">
+                        value="{{ $pegawai->umur }}">
                     @error('umur')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -46,8 +47,8 @@
                     <select name="jenis_kelamin" id="jenis_kelamin" class="form-control @error('jenis_kelamin') 
                         is-invalid @enderror">
                         <option value="">Pilih jenis kelamin</option>
-                        <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                        <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                        <option value="Laki-laki" {{ $pegawai->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ $pegawai->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
                     </select>
                     @error('jenis_kelamin')
                     <small class="text-danger">{{ $message }}</small>
@@ -57,7 +58,7 @@
                     <label for="tanggal_lahir">Tanggal Lahir</label>
                     <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control @error('tanggal_lahir') 
                         is-invalid @enderror"
-                        value="{{ old('tanggal_lahir') }}">
+                        value="{{ $pegawai->tanggal_lahir }}">
                     @error('tanggal_lahir')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -66,7 +67,7 @@
                     <label for="tempat_lahir">Tempat Lahir</label>
                     <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control @error('tempat_lahir') 
                         is-invalid @enderror"
-                        value="{{ old('tempat_lahir') }}">
+                        value="{{ $pegawai->tempat_lahir }}">
                     @error('tempat_lahir')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
@@ -74,7 +75,7 @@
                 <div class="form-group my-2">
                     <label for="alamat">Alamat</label>
                     <textarea name="alamat" id="alamat" class="form-control @error('alamat') 
-                        is-invalid @enderror">{{ old('alamat') }}</textarea>
+                        is-invalid @enderror">{{ $pegawai->alamat }}</textarea>
                     @error('alamat')
                     <small class="text-danger">{{ $message }}</small>
                     @enderror
