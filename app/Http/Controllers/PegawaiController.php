@@ -27,7 +27,7 @@ class PegawaiController extends Controller
             'umur' => 'required|numeric',
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required',
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ],[
             'nama_pegawai.required' => 'Nama pegawai harus diisi',
             'nik.required' => 'NIK harus diisi',
@@ -49,7 +49,7 @@ class PegawaiController extends Controller
         // ]);
 
         Pegawai::create($request->all());
-        return redirect()->route('pegawai.index');
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan');
     }
 
     public function edit(String $id)
@@ -67,7 +67,7 @@ class PegawaiController extends Controller
             'umur' => 'required|numeric',
             'tanggal_lahir' => 'required|date',
             'tempat_lahir' => 'required',
-            'jenis_kelamin' => 'required|in:laki-laki,perempuan',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ],[
             'nama_pegawai.required' => 'Nama pegawai harus diisi',
             'nik.required' => 'NIK harus diisi',
@@ -92,6 +92,12 @@ class PegawaiController extends Controller
 
         $pegawai->update($request->except('nik'));
 
-        return redirect()->route('pegawai.index');
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
+    }
+
+    public function destroy(String $id)
+    {
+        Pegawai::destroy($id);
+        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil dihapus');
     }
 }

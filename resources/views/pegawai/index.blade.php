@@ -1,56 +1,90 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="card-title">Daftar Pegawai</h4>
-            <div>
-                <a href="{{ route('pegawai.create') }}" class="btn btn-primary">
-                    Tambah Data Pegawai
-                </a>
+    <div class="container">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Daftar Pegawai</h4>
+                <div>
+                    <a href="{{ route('pegawai.create') }}" class="btn btn-primary">
+                        Tambah Data Pegawai
+                    </a>
+                </div>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered" id="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Pegawai</th>
+                            <th>NIK</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Umur</th>
+                            <th>Tempat, Tanggal Lahir</th>
+                            <th>Alamat</th>
+                            <th>Opsi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($pegawai as $index => $item)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $item->nama_pegawai }}</td>
+                                <td>{{ $item->nik }}</td>
+                                <td>{{ $item->jenis_kelamin }}</td>
+                                <td>{{ $item->umur }}</td>
+                                <td>{{ $item->tempat_lahir }},
+                                    {{ \Carbon\Carbon::parse($item->tanggal_lahir)->locale('id')->translatedFormat('d F Y') }}
+                                </td>
+                                <td>{{ $item->alamat }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <a class="btn dropdown-toggle" href="#" role="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                            Aksi
+                                        </a>
+
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item"
+                                                    href="{{ route('pegawai.edit', $item->id) }}">Edit</a></li>
+                                            <li><button type="button" class="btn text-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#confirmDeleteModal{{ $item->id }}">
+                                                    Delete Data
+                                                </button></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="card-body">
-            <table class="table table-bordered" id="table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Pegawai</th>
-                        <th>NIK</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Umur</th>
-                        <th>Tempat, Tanggal Lahir</th>
-                        <th>Alamat</th>
-                        <th>Opsi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($pegawai as $index => $item)
-                    <tr>
-                        <td>{{ $index + 1 }}</td>
-                        <td>{{ $item->nama_pegawai }}</td>
-                        <td>{{ $item->nik }}</td>
-                        <td>{{ $item->jenis_kelamin }}</td>
-                        <td>{{ $item->umur }}</td>
-                        <td>{{ $item->tempat_lahir }}, {{ \Carbon\Carbon::parse($item->tanggal_lahir)->locale('id')->translatedFormat('d F Y') }}</td>
-                        <td>{{ $item->alamat }}</td>
-                        <td>
-                            <div class="dropdown">
-                                <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Aksi
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{{ route('pegawai.edit', $item->id) }}">Edit</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
     </div>
-</div>
+
+    @foreach ($pegawai as $item)
+        <!-- Modal -->
+        <div class="modal fade" id="confirmDeleteModal{{ $item->id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">lanjutkan Penghapusan Data</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Data akan terhapus secara permanen, Klik lanjutkan <b>lanjutkan</b> untuk menghapus data</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <form action="{{route('pegawai.destroy', $item->id)}}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Lanjutkan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
