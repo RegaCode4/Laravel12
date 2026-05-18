@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.mantis')
 
 @section('content')
-    <div class="container">
+    <div class="">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="card-title">Daftar Pegawai</h4>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <form action="{{route('pegawai.destroy', $item->id)}}" method="POST">
+                        <form action="{{ route('pegawai.destroy', $item->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger">Lanjutkan</button>
