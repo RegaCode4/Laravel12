@@ -64,3 +64,7 @@ Route::resource('pegawai', PegawaiController::class);
 //     // return redirect()->to('/pegawai/cek_absensi/januari');
 //     // return redirect()->away('https://laravel.com/');
 // });
+
+// Route::get('/truncate', function () {
+//     Pegawai::truncate();
+// });

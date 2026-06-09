@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -11,7 +13,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $pegawai = Pegawai::all();
+        $pegawai = Pegawai::with('user')->get();
         return view('pegawai.index', compact('pegawai'));
     }
 
@@ -25,8 +27,9 @@ class PegawaiController extends Controller
         //dd($request->all());
         $request->validate([
             'nama_pegawai' => 'required',
+            'email' => 'required|email|unique:users,email',
             'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'nik' => 'required|numeric|unique:pegawais',
+            'nik' => 'required|numeric|unique:pegawais,nik',
             'alamat' => 'required',
             'umur' => 'required|numeric',
             'tanggal_lahir' => 'required|date',
@@ -60,7 +63,15 @@ class PegawaiController extends Controller
         $newRequest = $request->all();
         $newRequest['foto'] = $fileName;
 
-        Pegawai::create($newRequest);
+        $newData = Pegawai::create($newRequest);
+        $user = User::create([
+            'name' => $request->nama_pegawai,
+            'email' => $request->email,
+            'password' => Hash::make('password'),
+            'pegawai_id' => $newData->id,
+        ]);
+        $newData->user_id = $user->id;
+        $newData->save();
         return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil ditambahkan');
     }
 

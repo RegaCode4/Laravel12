@@ -12,4 +12,9 @@ class Pegawai extends Model
     use HasFactory;
     //boleh diisi dengan field apa saja yang tidak boleh diisi, misalnya id, created_at, updated_at
     protected $guarded = ['id'];
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

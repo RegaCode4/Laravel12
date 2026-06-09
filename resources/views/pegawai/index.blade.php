@@ -17,6 +17,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Pegawai</th>
+                            <th>Email</th>
                             <th>NIK</th>
                             <th>Jenis Kelamin</th>
                             <th>Umur</th>
@@ -31,6 +32,7 @@
                             <tr>
                                 <td>{{ $index + 1 }}</td>
                                 <td>{{ $item->nama_pegawai }}</td>
+                                <td>{{ $item->user->email }}</td>
                                 <td>{{ $item->nik }}</td>
                                 <td>{{ $item->jenis_kelamin }}</td>
                                 <td>{{ $item->umur }}</td>

@@ -25,6 +25,16 @@
                         @enderror
                     </div>
                     <div class="form-group my-2">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email"
+                            class="form-control @error('email') 
+                        is-invalid @enderror"
+                            value="{{ old('email') }}" autocomplete="off">
+                        @error('email')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group my-2">
                         <label for="nik">NIK</label>
                         <input type="text" name="nik" id="nik"
                             class="form-control @error('nik') 
