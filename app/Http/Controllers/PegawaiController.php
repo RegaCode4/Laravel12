@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bagian;
 use App\Models\Pegawai;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +20,8 @@ class PegawaiController extends Controller
 
     public function create()
     {
-        return view('pegawai.create');
+        $bagians = Bagian::all();
+        return view('pegawai.create', compact('bagians'));
     }
 
     public function store(Request $request)
@@ -27,6 +29,7 @@ class PegawaiController extends Controller
         //dd($request->all());
         $request->validate([
             'nama_pegawai' => 'required',
+            'bagian_id' => 'required|exists:bagians,id',
             'email' => 'required|email|unique:users,email',
             'foto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'nik' => 'required|numeric|unique:pegawais,nik',
@@ -37,6 +40,7 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ], [
             'nama_pegawai.required' => 'Nama pegawai harus diisi',
+            'bagian_id.required' => 'Bagian harus dipilih',
             'nik.required' => 'NIK harus diisi',
             'alamat.required' => 'Alamat harus diisi',
             'umur.required' => 'Umur harus diisi',
@@ -78,13 +82,15 @@ class PegawaiController extends Controller
     public function edit(String $id)
     {
         $pegawai = Pegawai::find($id);
-        return view('pegawai.edit', compact('pegawai'));
+        $bagians = Bagian::all();
+        return view('pegawai.edit', compact('pegawai', 'bagians'));
     }
 
     public function update(Request $request, Pegawai $pegawai)
     {
         $request->validate([
             'nama_pegawai' => 'required',
+            'bagian_id' => 'required|exists:bagians,id',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'nik' => 'required|numeric|unique:pegawais,nik,' . $pegawai->id,
             'alamat' => 'required',
@@ -94,6 +100,7 @@ class PegawaiController extends Controller
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
         ],[
             'nama_pegawai.required' => 'Nama pegawai harus diisi',
+            'bagian_id.required' => 'Bagian harus dipilih',
             'nik.required' => 'NIK harus diisi',
             'alamat.required' => 'Alamat harus diisi',
             'umur.required' => 'Umur harus diisi',

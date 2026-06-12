@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BagianController;
 use App\Http\Controllers\PegawaiController;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\Auth;
@@ -68,3 +69,5 @@ Route::resource('pegawai', PegawaiController::class);
 // Route::get('/truncate', function () {
 //     Pegawai::truncate();
 // });
+
+Route::resource('bagian',BagianController::class);

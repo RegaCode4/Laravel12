@@ -26,6 +26,21 @@
                         @enderror
                     </div>
                     <div class="form-group my-2">
+                        <label for="bagian_id">Bagian</label>
+                        <select name="bagian_id" id="bagian_id"
+                            class="form-control @error('bagian_id') 
+                        is-invalid @enderror">
+                            <option value="">Pilih bagian</option>
+                            @foreach ($bagians as $bagian)
+                                <option value="{{ $bagian->id }}" {{ $pegawai->bagian_id ? 'selected' : '' }}>
+                                    {{ $bagian->nama_bagian }}</option>
+                            @endforeach
+                        </select>
+                        @error('bagian_id')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group my-2">
                         <label for="nik">NIK</label>
                         <input type="text" name="nik" id="nik"
                             class="form-control @error('nik') 

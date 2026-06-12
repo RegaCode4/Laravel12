@@ -17,4 +17,9 @@ class Pegawai extends Model
     {
         return $this->hasOne(User::class);
     }
+
+    public function bagian()
+    {
+        return $this->belongsTo(Bagian::class);
+    }
 }

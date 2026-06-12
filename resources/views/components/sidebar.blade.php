@@ -10,6 +10,7 @@
                 <ul class="pc-navbar">
                     <x-sidebar.links title="Home" icon="ti ti-typography" route="home" />
                     <x-sidebar.links title="Data Pegawai" icon="ti ti-users" route="pegawai.index" />
+                    <x-sidebar.links title="Data Bagian" icon="ti ti-building" route="bagian.index" />
 
                 </ul>
             </div>
